@@ -35,16 +35,16 @@ api.interceptors.request.use((config) => {
 //   return config;
 // });
 
-// export function getErrorMessage(error: unknown): string {
-//   if (axios.isAxiosError(error)) {
-//     const data = error.response?.data;
-//     if (data && typeof data === "object" && "message" in data) {
-//       const message = (data as { message: unknown }).message;
-//       if (typeof message === "string") return message;
-//     }
-//     return error.message;
-//   }
+export function getErrorMessage(error: unknown): string {
+  if (axios.isAxiosError(error)) {
+    const data = error.response?.data;
+    if (data && typeof data === 'object' && 'message' in data) {
+      const message = (data as { message: unknown }).message;
+      if (typeof message === 'string') return message;
+    }
+    return error.message;
+  }
 
-//   if (error instanceof Error) return error.message;
-//   return "terjadi kesalahan";
-// }
+  if (error instanceof Error) return error.message;
+  return 'terjadi kesalahan';
+}
