@@ -1,3 +1,5 @@
+//ini semua harus sesuai dengan data 'Responses > example' dari backend di link ini, FE yg ikut BE jangan ada gerakan tambahan
+//https://be-blg-production.up.railway.app/api
 export interface User {
   id: number;
   name: string;
