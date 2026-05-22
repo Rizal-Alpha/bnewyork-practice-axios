@@ -79,7 +79,7 @@ export function RegisterPage() {
   };
 
   //========================
-  //Satpam Tampilan
+  //Satpam Tampilan (bisa diletakkan juga "Skeleton Loading")
   /*React membaca kode dari atas ke bawah. Jika status isLoading bernilai true, React akan langsung memotong komando (return) dan menampilkan teks "Memuat..." saja. Formulir pendaftaran di bawahnya tidak akan dimunculkan ke layar demi keamanan agar user tidak menekan tombol submit berkali-kali saat proses kirim data sedang berjalan. */
   if (isLoading) {
     return <p className='text-center mt-10 text-gray-500'>Memuat...</p>;

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 //agar kita nda nulis ulang url-nya tiap mau dipakai, jadi simpan ke variable:
 export const api = axios.create({
-  baseURL: 'https://be-blg-production.up.railway.app/api',
+  baseURL: 'https://be-blg-production.up.railway.app',
   timeout: 10000, //dikasi batas waktu request ke server, jika lewat maka req dibatalkan agar tidak lemot
 });
 
@@ -12,7 +12,7 @@ api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
 
   if (token) {
-    config.headers.Authorization = `bearer ${token}`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
