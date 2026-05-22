@@ -16,6 +16,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     () => localStorage.getItem('token') !== null
   );
 
+  //useEffect  =>  fitur auto-login, nda perlu register lagi... ada 3 situasi yg di-handle:
+  /*1. token kosong(null) => Langsung berhenti (return). Tidak melakukan apa-apa karena user belum login.
+    2. Token Ada & Valid (Asli) => Mengambil data profil dari server, Menyimpannya ke setUser(me), Mematikan loading web.
+    3. Token Ada tapi Invalid (Palsu/Kedaluwarsa) => Menghapus token dari localStorage, Mengosongkan state token, Mematikan loading web (User otomatis gagal login).*/
   useEffect(() => {
     if (!token) {
       //klo dia nda ada token maka nda perlu return apa pun
@@ -33,7 +37,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (!cancelled) {
           // 👈 Dicek dulu, apakah jalurnya masih aman?
           setUser(me); // Simpan data user ke state
-          setInitializing(false); // Matikan loading spinner
+          setInitializing(false); //token ada (!== null)
         }
       })
 
@@ -56,9 +60,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(newToken);
   };
 
+  /*ini ada di type.ts
+  interface RegisterInput {
+    name: string;
+    username: string;
+    email: string;
+    password: string;
+    =================
+    registerUser  tu fungsi di authService.ts
+  }
+ async => Ini adalah tanda pengenal. Kita memberi tahu JavaScript: "Hei, fungsi register ini di dalamnya bakal ada proses tunggu-menunggu ya!"
+ await => Ini adalah perintah stop. Kita bilang ke JavaScript: "Tolong berhenti dan tunggu di baris ini sampai server selesai memproses registerUser. Jangan berani-berani lanjut ke baris bawahnya sebelum proses ini kelar dan sukses!" */
   const register = async (input: RegisterInput) => {
     await registerUser(input);
-    await login({ email: input.email, password: input.password });
+    await login({ email: input.email, password: input.password }); //fungsi login yang sudah kita buat sebelumnya hanya butuh 2 data saja untuk bekerja, yaitu email dan password. Dia tidak butuh data name atau username. ntar ni klo udah login akan bisa lanjut ke pages
   };
 
   const logout = () => {
@@ -82,5 +97,5 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-//tugasku next:  lihat pemancar yg terima sinyal wifi dgn "useContext"
+//tugasku next:  lihat antena yg terima sinyal wifi dgn "useContext"
 /*hasil: ternyata coach henry ada letak di file  useAuth.ts (teknik "custom hook") nda langsung di HomePage atau RegisterPage */
