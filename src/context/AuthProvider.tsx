@@ -95,6 +95,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   createContext: Proses "membeli dan mendaftarkan" frekuensi radio baru milikmu.*/
   //"Siapa pun komponen yang ditaruh di dalam wadah {children} ini, mereka otomatis berada di dalam radius pancaran sinyal Wifi saya, dan mereka berhak mengambil data yang ada di dalam tombol value."
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  // Di balik layar, AuthProvider memancarkan ini: value = { user, token, isInitializing, login, register, logout }
 }
 
 //tugasku next:  lihat antena yg terima sinyal wifi dgn "useContext"
